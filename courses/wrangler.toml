@@ -1,0 +1,8 @@
+name = "courses"
+type = 'javascript'
+
+account_id = "0668fdd4efcc24407ac6fbcdf14c2d64"
+workers_dev = true
+
+main = "src/index.js"
+compatibility_date = "2023-01-19"
