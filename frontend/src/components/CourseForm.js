@@ -42,7 +42,7 @@ export default function CourseForm({ courseAdded }) {
               type="text"
               name="name"
               id="name"
-              value={name}
+              // value={name}
               className="form-control"
               // onChange={(e) => setName(e.target.value)}
             />
@@ -53,7 +53,7 @@ export default function CourseForm({ courseAdded }) {
               type="text"
               name="link"
               id="link"
-              value={link}
+              // value={link}
               className="form-control"
               // onChange={(e) => setLink(e.target.value)}
             />
