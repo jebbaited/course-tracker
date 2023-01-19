@@ -3,6 +3,7 @@ addEventListener('fetch', (event) => {
 });
 
 async function handleRequest(request) {
+  // console.log(request);
   const url = new URL(request.url);
 
   if (url.pathname === '/submit') {
@@ -21,12 +22,13 @@ const submitHandler = async (request) => {
 
   const body = await request.formData();
 
-  const { name, link } = Object.fromEntries(body);
+  const { name, link, tags } = Object.fromEntries(body);
 
   const reqBody = {
     fields: {
       Name: name,
       Link: link,
+      Tags: tags,
     },
   };
 
@@ -48,4 +50,7 @@ const createAirtableRecord = async (body) => {
       },
     }
   );
+
+  // const data = await resp.json();
+  // return new Response(`Here ${JSON.stringify(data)}`, { status: 406 });
 };
