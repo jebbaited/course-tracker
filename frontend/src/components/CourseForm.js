@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Tags from './Tags';
 
+const SERVERLESS_FN_URL =
+  'https://courses.my-worker-testing.workers.dev/submit';
+
 export default function CourseForm({ courseAdded }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
@@ -32,15 +35,16 @@ export default function CourseForm({ courseAdded }) {
     <div className="card">
       <div className="card-header">Add a New Course</div>
       <div className="card-body">
-        <form className="" onSubmit={submitCourse}>
+        <form className="" action={SERVERLESS_FN_URL} method="POST">
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
               type="text"
               name="name"
+              id="name"
               value={name}
               className="form-control"
-              onChange={(e) => setName(e.target.value)}
+              // onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -48,9 +52,10 @@ export default function CourseForm({ courseAdded }) {
             <input
               type="text"
               name="link"
+              id="link"
               value={link}
               className="form-control"
-              onChange={(e) => setLink(e.target.value)}
+              // onChange={(e) => setLink(e.target.value)}
             />
           </div>
           <div className="form-group">

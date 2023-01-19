@@ -6,3 +6,8 @@ workers_dev = true
 
 main = "src/index.js"
 compatibility_date = "2023-01-19"
+
+[vars]
+AIRTABLE_BASE_ID = "apps7cHnuhqX5ZYBt"
+AIRTABLE_TABLE_NAME = "Courses"
+FORM_URL = "https://course-tracker-bdn.pages.dev/"
