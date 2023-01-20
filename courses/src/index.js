@@ -37,8 +37,6 @@ const submitHandler = async (request) => {
 };
 
 const coursesHandler = async (request) => {
-  // console.log('wow');
-  // return new Response('here', { status: 406 });
   const resp = await fetch(
     `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
       AIRTABLE_TABLE_NAME
@@ -50,8 +48,8 @@ const coursesHandler = async (request) => {
       },
     }
   );
-  const data = resp.json();
-  return new Response(data, { status: 406 });
+  const data = await resp.json();
+  return new Response(JSON.stringify(data));
 };
 
 const router = Router();

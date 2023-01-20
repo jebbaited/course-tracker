@@ -8,7 +8,9 @@ function App() {
 
   const loadCourses = async () => {
     try {
-      const res = await fetch('/api/courses');
+      const res = await fetch(
+        'https://courses.my-worker-testing.workers.dev/api/courses'
+      );
       console.log('res', res);
       const courses = await res.json();
       setCourses(courses);
