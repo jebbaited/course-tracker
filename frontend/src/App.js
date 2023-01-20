@@ -11,9 +11,9 @@ function App() {
       const res = await fetch(
         'https://courses.my-worker-testing.workers.dev/api/courses'
       );
-      console.log('res', res);
       const courses = await res.json();
-      setCourses(courses);
+      console.log('courses', courses);
+      setCourses(courses.records);
     } catch (error) {
       console.error(error);
     }

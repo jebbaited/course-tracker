@@ -53,13 +53,39 @@ const coursesHandler = async (request) => {
   return new Response(JSON.stringify(data));
 };
 
+const deleteCoursesHandler = async (request) => {
+  const url = new URL(request.url);
+
+  console.log('request', request);
+
+  return fetch(
+    `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
+      AIRTABLE_TABLE_NAME
+    )}/${url.pathname}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+      },
+    }
+  );
+};
+
 const router = Router();
 
-const { preflight, corsify } = createCors();
+const { preflight, corsify } = createCors({
+  allowOrigin: '*',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  },
+});
 
 router
+  .options('*', preflight)
   .post('/submit', submitHandler)
   .get('/api/courses', coursesHandler)
+  // .put('/api/courses', coursesHandler)
+  .delete('/api/courses', deleteCoursesHandler)
   .get('*', () => new Response('Not found', { status: 404 }));
 
 addEventListener('fetch', (e) => {
