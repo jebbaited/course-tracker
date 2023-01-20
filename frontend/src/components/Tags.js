@@ -33,13 +33,7 @@ const Tags = ({ tagsUpdated, tagKey }) => {
     <>
       {tagChoices.map((choice, index) => (
         <label className="checkbox-inline mr-3" key={index}>
-          <input
-            type="checkbox"
-            value={choice}
-            onChange={tagChange}
-            name="tags"
-            id="tags"
-          />
+          <input type="checkbox" value={choice} onChange={tagChange} />
           {' ' + choice}
         </label>
       ))}

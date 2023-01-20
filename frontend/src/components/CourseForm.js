@@ -5,31 +5,29 @@ const SERVERLESS_FN_URL =
   'https://courses.my-worker-testing.workers.dev/submit';
 
 export default function CourseForm({ courseAdded }) {
-  const [name, setName] = useState('');
-  const [link, setLink] = useState('');
   const [tags, setTags] = useState([]);
   const [count, setCount] = useState(0);
 
   const resetForm = () => {
-    setName('');
-    setLink('');
+    // setName('');
+    // setLink('');
     setCount(count + 1);
   };
 
-  const submitCourse = async (e) => {
-    e.preventDefault();
-    try {
-      await fetch('/.netlify/functions/courses', {
-        method: 'POST',
-        body: JSON.stringify({ name, link, tags }),
-      });
-      resetForm();
-      courseAdded();
-    } catch (err) {
-      console.error(err);
-    }
-    console.log(name, link);
-  };
+  // const submitCourse = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await fetch('/.netlify/functions/courses', {
+  //       method: 'POST',
+  //       body: JSON.stringify({ name, link, tags }),
+  //     });
+  //     resetForm();
+  //     courseAdded();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  //   console.log(name, link);
+  // };
 
   return (
     <div className="card">
@@ -38,29 +36,20 @@ export default function CourseForm({ courseAdded }) {
         <form className="" action={SERVERLESS_FN_URL} method="POST">
           <div className="form-group">
             <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              // value={name}
-              className="form-control"
-              // onChange={(e) => setName(e.target.value)}
-            />
+            <input type="text" name="name" id="name" className="form-control" />
           </div>
           <div className="form-group">
             <label htmlFor="link">Link</label>
-            <input
-              type="text"
-              name="link"
-              id="link"
-              // value={link}
-              className="form-control"
-              // onChange={(e) => setLink(e.target.value)}
-            />
+            <input type="text" name="link" id="link" className="form-control" />
           </div>
           <div className="form-group">
             <p>Tags</p>
             <Tags tagsUpdated={setTags} tagKey={count} />
+            <input
+              name="tags"
+              value={tags.join(', ')}
+              className="hidden-button"
+            />
           </div>
           <button type="submit" className="btn btn-primary">
             Submit
