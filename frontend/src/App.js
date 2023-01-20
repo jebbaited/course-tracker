@@ -8,7 +8,8 @@ function App() {
 
   const loadCourses = async () => {
     try {
-      const res = await fetch('/.netlify/functions/courses');
+      const res = await fetch('/api/courses');
+      console.log('res', res);
       const courses = await res.json();
       setCourses(courses);
     } catch (error) {

@@ -6,28 +6,6 @@ const SERVERLESS_FN_URL =
 
 export default function CourseForm({ courseAdded }) {
   const [tags, setTags] = useState([]);
-  const [count, setCount] = useState(0);
-
-  const resetForm = () => {
-    // setName('');
-    // setLink('');
-    setCount(count + 1);
-  };
-
-  // const submitCourse = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await fetch('/.netlify/functions/courses', {
-  //       method: 'POST',
-  //       body: JSON.stringify({ name, link, tags }),
-  //     });
-  //     resetForm();
-  //     courseAdded();
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  //   console.log(name, link);
-  // };
 
   return (
     <div className="card">
@@ -44,7 +22,7 @@ export default function CourseForm({ courseAdded }) {
           </div>
           <div className="form-group">
             <p>Tags</p>
-            <Tags tagsUpdated={setTags} tagKey={count} />
+            <Tags tagsUpdated={setTags} />
             <input
               name="tags"
               value={tags.join(', ')}

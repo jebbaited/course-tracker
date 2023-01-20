@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Tags = ({ tagsUpdated, tagKey }) => {
+const Tags = ({ tagsUpdated }) => {
   const tagChoices = [
     'node',
     'javascript',
@@ -10,10 +10,6 @@ const Tags = ({ tagsUpdated, tagKey }) => {
     'devops',
   ];
   const [selectedTags, setSelectedTags] = useState([]);
-
-  useEffect(() => {
-    setSelectedTags([]);
-  }, [tagKey]);
 
   const tagChange = (e) => {
     const value = e.target.value;
