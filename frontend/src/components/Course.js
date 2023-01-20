@@ -17,9 +17,12 @@ const Course = ({ course, refreshCourses }) => {
 
   const deleteCourse = async () => {
     try {
-      await fetch(`/api/courses/${course.id}`, {
-        method: 'DELETE',
-      });
+      await fetch(
+        `https://courses.my-worker-testing.workers.dev/api/courses/${course.id}`,
+        {
+          method: 'DELETE',
+        }
+      );
       //   refreshCourses();
     } catch (err) {
       console.error(err);

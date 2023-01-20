@@ -8,23 +8,23 @@ import { getCourses } from './getCourses';
 //   event.respondWith(handleRequest(event.request));
 // });
 
-async function handleRequest(request) {
-  // console.log(request);
-  const url = new URL(request.url);
+// async function handleRequest(request) {
+//   // console.log(request);
+//   const url = new URL(request.url);
 
-  if (url.pathname === '/submit') {
-    return submitHandler(request);
-  }
-  if (url.pathname === '/courses') {
-    // return submitHandler(request);
-    return await getCourses();
-  }
-  // if (request.method === 'GET') {
-  //   await getCourses()
-  // }
+//   if (url.pathname === '/submit') {
+//     return submitHandler(request);
+//   }
+//   if (url.pathname === '/courses') {
+//     // return submitHandler(request);
+//     return await getCourses();
+//   }
+//   // if (request.method === 'GET') {
+//   //   await getCourses()
+//   // }
 
-  return Response.redirect(FORM_URL);
-}
+//   return Response.redirect(FORM_URL);
+// }
 
 const submitHandler = async (request) => {
   if (request.method !== 'POST') {
@@ -54,14 +54,12 @@ const coursesHandler = async (request) => {
 };
 
 const deleteCoursesHandler = async (request) => {
-  const url = new URL(request.url);
+  const id = request.params.id;
 
-  console.log('request', request);
-
-  return fetch(
+  const resp = await fetch(
     `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
       AIRTABLE_TABLE_NAME
-    )}/${url.pathname}`,
+    )}/${id}`,
     {
       method: 'DELETE',
       headers: {
@@ -69,6 +67,22 @@ const deleteCoursesHandler = async (request) => {
       },
     }
   );
+
+  const data = await resp.json();
+
+  return new Response(JSON.stringify(data));
+
+  // return fetch(
+  //   `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
+  //     AIRTABLE_TABLE_NAME
+  //   )}/${id}`,
+  //   {
+  //     method: 'DELETE',
+  //     headers: {
+  //       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+  //     },
+  //   }
+  // );
 };
 
 const router = Router();
@@ -85,7 +99,7 @@ router
   .post('/submit', submitHandler)
   .get('/api/courses', coursesHandler)
   // .put('/api/courses', coursesHandler)
-  .delete('/api/courses', deleteCoursesHandler)
+  .delete('/api/courses/:id', deleteCoursesHandler)
   .get('*', () => new Response('Not found', { status: 404 }));
 
 addEventListener('fetch', (e) => {
