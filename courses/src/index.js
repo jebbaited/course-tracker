@@ -1,4 +1,5 @@
 import { Router } from 'itty-router';
+import { createCors } from 'itty-cors';
 
 import { createCourse } from './createCourse';
 import { getCourses } from './getCourses';
@@ -54,11 +55,18 @@ const coursesHandler = async (request) => {
 
 const router = Router();
 
+const { preflight, corsify } = createCors();
+
 router
   .post('/submit', submitHandler)
   .get('/api/courses', coursesHandler)
   .get('*', () => new Response('Not found', { status: 404 }));
 
 addEventListener('fetch', (e) => {
-  e.respondWith(router.handle(e.request, e));
+  e.respondWith(
+    router
+      .handle(e.request, e)
+      .catch((err) => error(500, err.stack))
+      .then(corsify)
+  );
 });
