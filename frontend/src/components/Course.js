@@ -1,17 +1,15 @@
 import React from 'react';
 
 const Course = ({ course, refreshCourses }) => {
-  const fields = course.fields;
+  const courseFields = course.fields;
 
   const markCoursePurchased = async () => {
     try {
       await fetch(
         `https://courses.my-worker-testing.workers.dev/api/courses/${course.id}`,
-        // `http://0.0.0.0:8787/api/courses/${course.id}`,
         {
           method: 'PUT',
           body: JSON.stringify({fields: { ...course.fields, Purchased: 'true' }}),
-          // body: course,
         }
       );
       refreshCourses();
@@ -36,19 +34,19 @@ const Course = ({ course, refreshCourses }) => {
 
   return (
     <div className="list-group-item">
-      <a href={fields.Link}>
-        <h4 className="list-group-item-heading">{fields.Name}</h4>
+      <a href={courseFields.Link}>
+        <h4 className="list-group-item-heading">{courseFields.Name}</h4>
       </a>
       <p>
         Tags:{' '}
-        {fields.Tags &&
-          fields.Tags.split(', ').map((tag, index) => (
+        {courseFields.Tags &&
+          courseFields.Tags.split(', ').map((tag, index) => (
             <span className="badge badge-primary mr-2" key={index}>
               {tag}
             </span>
           ))}
       </p>
-      {!course.Purchased && (
+      {!courseFields.Purchased && (
         <button
           className="btn btn-sm btn-primary"
           onClick={markCoursePurchased}

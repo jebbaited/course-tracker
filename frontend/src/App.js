@@ -12,7 +12,6 @@ function App() {
         'https://courses.my-worker-testing.workers.dev/api/courses'
       );
       const courses = await res.json();
-      console.log('courses', courses);
       setCourses(courses.records);
     } catch (error) {
       console.error(error);
