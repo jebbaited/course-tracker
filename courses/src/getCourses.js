@@ -1,6 +1,6 @@
 export const getCourses = async () => {
     const resp = await fetch(
-        `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
+        `${AIRTABLE_URL}/${AIRTABLE_BASE_ID}/${encodeURIComponent(
           AIRTABLE_TABLE_NAME
         )}`,
         {

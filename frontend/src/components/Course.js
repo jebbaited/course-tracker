@@ -1,12 +1,13 @@
 import React from 'react';
 
 const Course = ({ course, refreshCourses }) => {
+  const WORKER_URL = 'https://courses.my-worker-testing.workers.dev/api/courses'
   const courseFields = course.fields;
 
   const markCoursePurchased = async () => {
     try {
       await fetch(
-        `https://courses.my-worker-testing.workers.dev/api/courses/${course.id}`,
+        `${WORKER_URL}/${course.id}`,
         {
           method: 'PUT',
           body: JSON.stringify({fields: { ...course.fields, Purchased: 'true' }}),
@@ -21,7 +22,7 @@ const Course = ({ course, refreshCourses }) => {
   const deleteCourse = async () => {
     try {
       await fetch(
-        `https://courses.my-worker-testing.workers.dev/api/courses/${course.id}`,
+        `${WORKER_URL}/${course.id}`,
         {
           method: 'DELETE',
         }

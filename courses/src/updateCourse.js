@@ -3,7 +3,7 @@ export const updateCourse = async (request) => {
     const content = await request.json()
   
     return fetch(
-      `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
+      `${AIRTABLE_URL}/${AIRTABLE_BASE_ID}/${encodeURIComponent(
         AIRTABLE_TABLE_NAME
       )}/${recordId}`,
       {
