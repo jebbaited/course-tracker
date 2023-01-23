@@ -5,10 +5,14 @@ const Course = ({ course, refreshCourses }) => {
 
   const markCoursePurchased = async () => {
     try {
-      await fetch('/.netlify/functions/courses', {
-        method: 'PUT',
-        body: JSON.stringify({ ...course, purchased: true }),
-      });
+      await fetch(
+        `https://courses.my-worker-testing.workers.dev/api/courses/${course.id}`,
+        {
+          method: 'PUT',
+          // body: JSON.stringify({ ...course.fields, purchased: true }),
+          body: course,
+        }
+      );
       refreshCourses();
     } catch (err) {
       console.error(err);
@@ -23,7 +27,7 @@ const Course = ({ course, refreshCourses }) => {
           method: 'DELETE',
         }
       );
-      //   refreshCourses();
+      refreshCourses();
     } catch (err) {
       console.error(err);
     }

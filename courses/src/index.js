@@ -56,7 +56,7 @@ const coursesHandler = async (request) => {
 const deleteCoursesHandler = async (request) => {
   const id = request.params.id;
 
-  const resp = await fetch(
+  return fetch(
     `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
       AIRTABLE_TABLE_NAME
     )}/${id}`,
@@ -67,28 +67,33 @@ const deleteCoursesHandler = async (request) => {
       },
     }
   );
+};
 
-  const data = await resp.json();
-
-  return new Response(JSON.stringify(data));
+const updateCoursesHandler = async (request) => {
+  const id = request.params.id;
 
   // return fetch(
   //   `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
   //     AIRTABLE_TABLE_NAME
   //   )}/${id}`,
   //   {
-  //     method: 'DELETE',
+  //     method: 'PUT',
+  //     body: JSON.stringify({ ...course.fields, purchased: true }),
+
   //     headers: {
   //       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
   //     },
   //   }
   // );
+  console.log(request.body);
+  return new Response(request.body);
 };
 
 const router = Router();
 
 const { preflight, corsify } = createCors({
-  allowOrigin: '*',
+  origins: ['*'],
+  methods: ['GET', 'POST', 'DELETE', 'PUT'],
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
@@ -98,7 +103,7 @@ router
   .options('*', preflight)
   .post('/submit', submitHandler)
   .get('/api/courses', coursesHandler)
-  // .put('/api/courses', coursesHandler)
+  .put('/api/courses/:id', updateCoursesHandler)
   .delete('/api/courses/:id', deleteCoursesHandler)
   .get('*', () => new Response('Not found', { status: 404 }));
 
