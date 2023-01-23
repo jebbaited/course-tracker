@@ -1,4 +1,10 @@
 {
   "name": "course-tracker",
-  "workspaces": ["frontend", "courses"]
+  "workspaces": [
+    "frontend",
+    "courses"
+  ],
+  "dependencies": {
+    "itty-router-extras": "^0.4.2"
+  }
 }

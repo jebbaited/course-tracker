@@ -7,10 +7,11 @@ const Course = ({ course, refreshCourses }) => {
     try {
       await fetch(
         `https://courses.my-worker-testing.workers.dev/api/courses/${course.id}`,
+        // `http://0.0.0.0:8787/api/courses/${course.id}`,
         {
           method: 'PUT',
-          // body: JSON.stringify({ ...course.fields, purchased: true }),
-          body: course,
+          body: JSON.stringify({fields: { ...course.fields, Purchased: 'true' }}),
+          // body: course,
         }
       );
       refreshCourses();
@@ -47,7 +48,7 @@ const Course = ({ course, refreshCourses }) => {
             </span>
           ))}
       </p>
-      {!course.purchased && (
+      {!course.Purchased && (
         <button
           className="btn btn-sm btn-primary"
           onClick={markCoursePurchased}

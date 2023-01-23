@@ -1,30 +1,10 @@
 import { Router } from 'itty-router';
 import { createCors } from 'itty-cors';
+import { error, json, missing } from 'itty-router-extras'
 
 import { createCourse } from './createCourse';
 import { getCourses } from './getCourses';
 
-// addEventListener('fetch', (event) => {
-//   event.respondWith(handleRequest(event.request));
-// });
-
-// async function handleRequest(request) {
-//   // console.log(request);
-//   const url = new URL(request.url);
-
-//   if (url.pathname === '/submit') {
-//     return submitHandler(request);
-//   }
-//   if (url.pathname === '/courses') {
-//     // return submitHandler(request);
-//     return await getCourses();
-//   }
-//   // if (request.method === 'GET') {
-//   //   await getCourses()
-//   // }
-
-//   return Response.redirect(FORM_URL);
-// }
 
 const submitHandler = async (request) => {
   if (request.method !== 'POST') {
@@ -37,7 +17,7 @@ const submitHandler = async (request) => {
   return Response.redirect(FORM_URL);
 };
 
-const coursesHandler = async (request) => {
+const coursesHandler = async () => {
   const resp = await fetch(
     `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
       AIRTABLE_TABLE_NAME
@@ -70,23 +50,23 @@ const deleteCoursesHandler = async (request) => {
 };
 
 const updateCoursesHandler = async (request) => {
-  const id = request.params.id;
+  const recordId = request.params.id;
+  const content = await request.json()
 
-  // return fetch(
-  //   `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
-  //     AIRTABLE_TABLE_NAME
-  //   )}/${id}`,
-  //   {
-  //     method: 'PUT',
-  //     body: JSON.stringify({ ...course.fields, purchased: true }),
+  return fetch(
+    `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(
+      AIRTABLE_TABLE_NAME
+    )}/${recordId}`,
+    {
+      method: 'PUT',
+      body: JSON.stringify(content) ,
 
-  //     headers: {
-  //       Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-  //     },
-  //   }
-  // );
-  console.log(request.body);
-  return new Response(request.body);
+      headers: {
+        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        'Content-type': `application/json`,
+      },
+    }
+  );
 };
 
 const router = Router();
@@ -111,7 +91,10 @@ addEventListener('fetch', (e) => {
   e.respondWith(
     router
       .handle(e.request, e)
-      .catch((err) => error(500, err.stack))
+      .catch((err) => {
+        console.log(err);
+        return error(500, err.stack)
+      })
       .then(corsify)
   );
 });
