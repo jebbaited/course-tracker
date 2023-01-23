@@ -4,7 +4,7 @@ import Tags from './Tags';
 const SERVERLESS_FN_URL =
   'https://courses.my-worker-testing.workers.dev/submit';
 
-export default function CourseForm({ courseAdded }) {
+export default function CourseForm() {
   const [tags, setTags] = useState([]);
 
   return (
