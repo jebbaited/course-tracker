@@ -1,7 +1,5 @@
 export const createCourse = async (request) => {
-  const body = await request.formData();
-
-  const { name, link, tags } = Object.fromEntries(body);
+  const { name, link, tags } = await request.json();
 
   const reqBody = {
     fields: {
@@ -20,11 +18,11 @@ const createAirtableRecord = async (body) => {
       AIRTABLE_TABLE_NAME
     )}`,
     {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(body),
       headers: {
         Authorization: `Bearer ${AIRTABLE_API_KEY}`,
-        'Content-type': `application/json`,
+        "Content-type": `application/json`,
       },
     }
   );

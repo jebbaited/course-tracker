@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const Tags = ({ tagsUpdated }) => {
+const Tags = ({ tagsUpdated, tagsKey }) => {
   const tagChoices = [
-    'node',
-    'javascript',
-    'react',
-    'react-native',
-    'digital-marketing',
-    'devops',
+    "node",
+    "javascript",
+    "react",
+    "react-native",
+    "digital-marketing",
+    "devops",
   ];
   const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {
+    setSelectedTags([]);
+  }, [tagsKey]);
 
   const tagChange = (e) => {
     const value = e.target.value;
     const alreadySelected = selectedTags.includes(value);
+
     if (e.target.checked && !alreadySelected) {
       setSelectedTags([...selectedTags, value]);
     } else if (!e.target.checked && alreadySelected) {
@@ -30,7 +35,7 @@ const Tags = ({ tagsUpdated }) => {
       {tagChoices.map((choice, index) => (
         <label className="checkbox-inline mr-3" key={index}>
           <input type="checkbox" value={choice} onChange={tagChange} />
-          {' ' + choice}
+          {" " + choice}
         </label>
       ))}
     </>
