@@ -5,11 +5,11 @@ export const createCourse = async (request) => {
     fields: {
       Name: name,
       Link: link,
-      Tags: tags,
+      Tags: tags.join(", "),
     },
   };
 
-  await createAirtableRecord(reqBody);
+  return createAirtableRecord(reqBody);
 };
 
 const createAirtableRecord = async (body) => {

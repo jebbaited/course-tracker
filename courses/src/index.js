@@ -16,7 +16,8 @@ const submitHandler = async (request) => {
 
   // console.log("here", request);
   try {
-    const resp = await createCourse(request);
+    return await createCourse(request);
+
     // return resp;
   } catch (error) {
     return new Response(error);
@@ -78,9 +79,10 @@ addEventListener("fetch", (e) => {
   e.respondWith(
     router
       .handle(e.request, e)
+      .then(corsify)
       .catch((err) => {
+        console.log(err.message);
         return error(500, err.stack);
       })
-      .then(corsify)
   );
 });

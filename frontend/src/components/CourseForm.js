@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Tags from "./Tags";
 
-const SERVERLESS_FN_URL =
-  "https://courses.my-worker-testing.workers.dev/submit";
-// const SERVERLESS_FN_URL = "http://0.0.0.0:8787/submit";
+// const SERVERLESS_FN_URL =
+//   "https://courses.my-worker-testing.workers.dev/submit";
+const SERVERLESS_FN_URL = "http://0.0.0.0:8787/submit";
 
 export default function CourseForm({ courseAdded }) {
   const [name, setName] = useState("");
