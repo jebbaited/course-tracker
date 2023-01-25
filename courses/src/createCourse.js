@@ -9,16 +9,16 @@ export const createCourse = async (request) => {
     },
   };
 
-  return createAirtableRecord(reqBody);
+  return createAirtableRecord(reqBody, request.method);
 };
 
-const createAirtableRecord = async (body) => {
+const createAirtableRecord = async (body, method) => {
   return fetch(
     `${AIRTABLE_URL}/${AIRTABLE_BASE_ID}/${encodeURIComponent(
       AIRTABLE_TABLE_NAME
     )}`,
     {
-      method: "POST",
+      method: method,
       body: JSON.stringify(body),
       headers: {
         Authorization: `Bearer ${AIRTABLE_API_KEY}`,

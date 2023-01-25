@@ -8,52 +8,19 @@ import { deleteCourse } from "./deleteCourse";
 import { updateCourse } from "./updateCourse";
 
 const submitHandler = async (request) => {
-  if (request.method !== "POST") {
-    return new Response("Method Not Allowed", {
-      status: 405,
-    });
-  }
-
-  // console.log("here", request);
-  try {
-    return await createCourse(request);
-
-    // return resp;
-  } catch (error) {
-    return new Response(error);
-  }
-
-  // return Response.redirect(FORM_URL);
+  return await createCourse(request);
 };
 
 const getCoursesHandler = async (request) => {
-  if (request.method !== "GET") {
-    return new Response("Method Not Allowed", {
-      status: 405,
-    });
-  }
-
-  const data = await getCourses();
+  const data = await getCourses(request);
   return new Response(data);
 };
 
 const deleteCoursesHandler = async (request) => {
-  if (request.method !== "DELETE") {
-    return new Response("Method Not Allowed", {
-      status: 405,
-    });
-  }
-
   return await deleteCourse(request);
 };
 
 const updateCoursesHandler = async (request) => {
-  if (request.method !== "PUT") {
-    return new Response("Method Not Allowed", {
-      status: 405,
-    });
-  }
-
   return await updateCourse(request);
 };
 
@@ -73,7 +40,7 @@ router
   .get("/api/courses", getCoursesHandler)
   .put("/api/courses/:id", updateCoursesHandler)
   .delete("/api/courses/:id", deleteCoursesHandler)
-  .get("*", () => new Response("Not found", { status: 404 }));
+  .all("*", () => new Response("Not found", { status: 404 }));
 
 addEventListener("fetch", (e) => {
   e.respondWith(
@@ -81,7 +48,6 @@ addEventListener("fetch", (e) => {
       .handle(e.request, e)
       .then(corsify)
       .catch((err) => {
-        console.log(err.message);
         return error(500, err.stack);
       })
   );

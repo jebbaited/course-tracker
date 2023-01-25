@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
+
 import CourseForm from "./components/CourseForm";
 import CourseList from "./components/CourseList";
 import "./App.css";
-import { useEffect, useState } from "react";
 
 function App() {
   const [courses, setCourses] = useState([]);
@@ -9,7 +10,10 @@ function App() {
   const loadCourses = async () => {
     try {
       const res = await fetch(
-        "https://courses.my-worker-testing.workers.dev/api/courses"
+        `${process.env.REACT_APP_SERVER_URL}/api/courses`,
+        {
+          method: "GET",
+        }
       );
       const courses = await res.json();
       setCourses(courses.records);

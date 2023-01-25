@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Tags from "./Tags";
 
-const SERVERLESS_FN_URL =
-  "https://courses.my-worker-testing.workers.dev/submit";
-// const SERVERLESS_FN_URL = "http://0.0.0.0:8787/submit";
+import Tags from "./Tags";
 
 export default function CourseForm({ courseAdded }) {
   const [name, setName] = useState("");
@@ -20,7 +17,7 @@ export default function CourseForm({ courseAdded }) {
   const submitCourse = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`${SERVERLESS_FN_URL}`, {
+      await fetch(`${process.env.REACT_APP_SERVER_URL}/submit`, {
         method: "POST",
         body: JSON.stringify({ name, link, tags }),
       });
@@ -59,12 +56,6 @@ export default function CourseForm({ courseAdded }) {
           <div className="form-group">
             <p>Tags</p>
             <Tags tagsUpdated={setTags} tagsKey={count} />
-            {/* <input
-              name="tags"
-              value={tags.join(", ")}
-              className="hidden-button"
-              readOnly
-            /> */}
           </div>
           <button type="submit" className="btn btn-primary">
             Submit

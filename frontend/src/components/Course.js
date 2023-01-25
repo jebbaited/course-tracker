@@ -1,16 +1,17 @@
-import React from 'react';
+import React from "react";
 
 const Course = ({ course, refreshCourses }) => {
-  const WORKER_URL = 'https://courses.my-worker-testing.workers.dev/api/courses'
   const courseFields = course.fields;
 
   const markCoursePurchased = async () => {
     try {
       await fetch(
-        `${WORKER_URL}/${course.id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/courses/${course.id}`,
         {
-          method: 'PUT',
-          body: JSON.stringify({fields: { ...course.fields, Purchased: 'true' }}),
+          method: "PUT",
+          body: JSON.stringify({
+            fields: { ...course.fields, Purchased: true },
+          }),
         }
       );
       refreshCourses();
@@ -22,9 +23,9 @@ const Course = ({ course, refreshCourses }) => {
   const deleteCourse = async () => {
     try {
       await fetch(
-        `${WORKER_URL}/${course.id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/courses/${course.id}`,
         {
-          method: 'DELETE',
+          method: "DELETE",
         }
       );
       refreshCourses();
@@ -39,9 +40,9 @@ const Course = ({ course, refreshCourses }) => {
         <h4 className="list-group-item-heading">{courseFields.Name}</h4>
       </a>
       <p>
-        Tags:{' '}
+        Tags:{" "}
         {courseFields.Tags &&
-          courseFields.Tags.split(', ').map((tag, index) => (
+          courseFields.Tags.split(", ").map((tag, index) => (
             <span className="badge badge-primary mr-2" key={index}>
               {tag}
             </span>
