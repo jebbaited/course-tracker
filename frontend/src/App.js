@@ -11,7 +11,6 @@ function App() {
     try {
       const res = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/courses`,
-        // `https://courses.my-worker-testing.workers.dev/api/courses`,
         {
           method: "GET",
         }
