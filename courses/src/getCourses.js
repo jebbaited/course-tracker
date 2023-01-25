@@ -6,7 +6,8 @@ export const getCourses = async (request) => {
     {
       method: request.method,
       headers: {
-        Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        // Authorization: `Bearer ${AIRTABLE_API_KEY}`,
+        Authorization: `Bearer ${"keydnzLambqQocEhc"}`,
       },
     }
   );
